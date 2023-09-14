@@ -25,7 +25,8 @@ from tasks.serializers.catalogs import (StatusSerializer,
 #TODO: desarrollo de las vistas para los serializadores creados, utilizando ModelViewSet
 
 class StatusViewSet(viewsets.ModelViewSet):
-    pass
+    queryset = Status.objects.all()
+    serializer_class = StatusSerializer
 
 class ServiceViewSet(viewsets.ModelViewSet):
     pass

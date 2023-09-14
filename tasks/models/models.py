@@ -40,7 +40,7 @@ class AccountData(models.Model):
     pole_meters = models.PositiveIntegerField(blank=True, null=True)
     pay_amount = models.FloatField(blank=True, null=True)
     id_user = models.ForeignKey('Users', models.DO_NOTHING, db_column='id_user', related_name='accountdata_id_user_set')
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -59,7 +59,7 @@ class Client(models.Model):
     email = models.CharField(unique=True, max_length=50, blank=True, null=True)
     phone_number = models.PositiveIntegerField()
     identification = models.ForeignKey('IdentificationType', models.DO_NOTHING)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -69,7 +69,7 @@ class Client(models.Model):
 
 class Departments(models.Model):
     department_name = models.CharField(max_length=25, blank=True, null=True)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -79,7 +79,7 @@ class Departments(models.Model):
 
 class ElectricPole(models.Model):
     id = models.CharField(primary_key=True, max_length=10)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -93,7 +93,7 @@ class HomeInformation(models.Model):
     zone_number = models.PositiveIntegerField()
     reference = models.CharField(max_length=50, blank=True, null=True)
     id_village = models.ForeignKey('Village', models.DO_NOTHING, db_column='id_village')
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -103,7 +103,7 @@ class HomeInformation(models.Model):
 
 class IdentificationType(models.Model):
     identification_name = models.CharField(max_length=25)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -115,7 +115,7 @@ class Login(models.Model):
     username = models.CharField(unique=True, max_length=25)
     password = models.CharField(max_length=25)
     id_user = models.ForeignKey('Users', models.DO_NOTHING, db_column='id_user')
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -125,7 +125,7 @@ class Login(models.Model):
 
 class Roles(models.Model):
     rol_name = models.CharField(max_length=25, blank=True, null=True)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -135,7 +135,7 @@ class Roles(models.Model):
 
 class Route(models.Model):
     route_name = models.CharField(unique=True, max_length=50)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -145,7 +145,7 @@ class Route(models.Model):
 
 class Services(models.Model):
     service_name = models.CharField(unique=True, max_length=50)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -155,7 +155,7 @@ class Services(models.Model):
 
 class Status(models.Model):
     status_name = models.CharField(unique=True, max_length=25)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -166,7 +166,7 @@ class Status(models.Model):
 class Users(models.Model):
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
     rol = models.ForeignKey(Roles, models.DO_NOTHING)
@@ -179,7 +179,7 @@ class Users(models.Model):
 
 class Village(models.Model):
     village_name = models.CharField(unique=True, max_length=50)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -190,7 +190,7 @@ class Village(models.Model):
 class Wattmeter(models.Model):
     wattmeter_number = models.IntegerField(unique=True)
     wattmeter_brand = models.ForeignKey('WattmeterBrand', models.DO_NOTHING)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -200,7 +200,7 @@ class Wattmeter(models.Model):
 
 class WattmeterBrand(models.Model):
     brand_name = models.CharField(max_length=50)
-    insert_date = models.DateTimeField(blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:

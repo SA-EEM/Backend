@@ -33,22 +33,29 @@ class ServiceViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
 
 class WattmeterBrandViewSet(viewsets.ModelViewSet):
-    pass
+    queryset = WattmeterBrand.objects.all()
+    serializer_class = WattmeterBrandSerializer
 
 class RouteViewSet(viewsets.ModelViewSet):
-    pass
+    queryset = Route.objects.all()
+    serializer_class = RouteSerializer
 
 class VillageViewSet(viewsets.ModelViewSet):
-    pass
-
+    queryset = Village.objects.all()
+    serializer_class = VillageSerializer
+  
 class ElectricPoleViewSet(viewsets.ModelViewSet):
-    pass
+    queryset = ElectricPole.objects.all()
+    serializer_class = ElectricPoleSerializer
 
 class IdentificationTypeViewSet(viewsets.ModelViewSet):
-    pass
-
+    queryset = IdentificationType.objects.all()
+    serializer_class = IdentificationTypeSerializer
+ 
 class RolesViewSet(viewsets.ModelViewSet):
-    pass
-
+    queryset = Roles.objects.all()
+    serializer_class = RolesSerializer
+ 
 class DepartmentsViewSet(viewsets.ModelViewSet):
-    pass
+    queryset = Departments.objects.all()
+    serializer_class = DepartmentsSerializer

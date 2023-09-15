@@ -34,6 +34,22 @@ class StatusSerializer(serializers.ModelSerializer):
         return instance
 
 class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Services
+        fields = ['id', 'service_name', 'insert_date', 'update_date']
+        read_only_fields = ['insert_date']
+    
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['insert_date'] = instance.insert_date.strftime('%Y-%m-%d')
+        representation['update_date'] = instance.update_date.strftime('%Y-%m-%d') if instance.update_date is not None else instance.update_date
+        return representation
+    
+    def update(self, instance, validated_data):
+        instance.update_date = timezone.now()
+        instance.service_name = validated_data.get('service_name')
+        instance.save(update_fields=['service_name', 'update_date'])
+        return instance
     pass
 
 class WattmeterBrandSerializer(serializers.ModelSerializer):

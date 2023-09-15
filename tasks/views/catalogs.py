@@ -29,7 +29,8 @@ class StatusViewSet(viewsets.ModelViewSet):
     serializer_class = StatusSerializer
 
 class ServiceViewSet(viewsets.ModelViewSet):
-    pass
+    queryset = Services.objects.all()
+    serializer_class = ServiceSerializer
 
 class WattmeterBrandViewSet(viewsets.ModelViewSet):
     pass

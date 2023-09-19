@@ -14,6 +14,7 @@ from tasks.views.catalogs import (
     DepartmentsViewSet
     )
 from tasks.views.home_info import HomeInfoViewSet
+from tasks.views.client import ClientViewSet
 
 router = routers.DefaultRouter()
 
@@ -27,6 +28,7 @@ router.register('catalog/identificationType', IdentificationTypeViewSet, basenam
 router.register('catalog/roles', RolesViewSet, basename='roles')
 router.register('catalog/departments', DepartmentsViewSet, basename='departments')
 router.register('homeInformation', HomeInfoViewSet, basename='homeInformation')
+router.register('client', ClientViewSet, basename='client')
 
 # router.register(r'tasks', views.TaskView, 'tasks')
 

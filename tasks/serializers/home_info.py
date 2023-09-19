@@ -1,7 +1,6 @@
 from rest_framework import serializers
 #Modelo
 from tasks.models.models import HomeInformation
-from tasks.models.models import Village
 #Serializador Village
 from .catalogs import VillageSerializer
 

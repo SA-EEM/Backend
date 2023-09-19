@@ -13,6 +13,7 @@ from tasks.views.catalogs import (
     RolesViewSet,
     DepartmentsViewSet
     )
+from tasks.views.home_info import HomeInfoViewSet
 
 router = routers.DefaultRouter()
 
@@ -25,6 +26,7 @@ router.register('catalog/electricPole', ElectricPoleViewSet, basename='electricP
 router.register('catalog/identificationType', IdentificationTypeViewSet, basename='identificationType')
 router.register('catalog/roles', RolesViewSet, basename='roles')
 router.register('catalog/departments', DepartmentsViewSet, basename='departments')
+router.register('homeInformation', HomeInfoViewSet, basename='homeInformation')
 
 # router.register(r'tasks', views.TaskView, 'tasks')
 

@@ -16,6 +16,8 @@ class GETHomeInformationSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         data['id_village'] = VillageSerializer(instance.id_village).data
+        data['insert_date'] = instance.insert_date.strftime('%Y-%m-%d')
+        data['update_date'] = instance.update_date.strftime('%Y-%m-%d') if instance.update_date is not None else instance.update_date
         return data
     
 

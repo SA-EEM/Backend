@@ -4,6 +4,8 @@ from tasks.models.models import Users
 #Serializadores
 from .catalogs import DepartmentsSerializer, RolesSerializer
 
+from rest_framework.authtoken.models import Token
+
 class GETUsersSerializer(serializers.ModelSerializer):
     rol = RolesSerializer(many=False, read_only=True)
     department = DepartmentsSerializer(many=False, read_only=True)
@@ -12,6 +14,9 @@ class GETUsersSerializer(serializers.ModelSerializer):
         model = Users
         fields = ['id', 'first_name', 'last_name', 'status', 'rol', 'department','insert_date', 'update_date']
         read_only_fields = ['insert_date']
+        extra_kwargs = {
+            'password' : {'write_only': True}
+        }
     
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -27,3 +32,21 @@ class POSTUsersSerializer(serializers.ModelSerializer):
         model = Users
         fields = ['id', 'first_name', 'last_name', 'status', 'rol', 'department','insert_date', 'update_date']
         read_only_fields = ['insert_date']
+
+        extra_kwargs = {
+            'password' : {'write_only': True}
+        }
+
+    def create(self, validated_data):
+        user = Users(
+            first_name = validated_data['first_name'],
+            last_name = validated_data['last_name'],
+            username = validated_data['username'],
+            status = validated_data['status'],
+            rol = validated_data['rol'],
+            department = validated_data['department'],
+        )
+        user.set_password(validated_data['password'])
+        user.save()
+        Token.objects.create(user = user)
+        return user

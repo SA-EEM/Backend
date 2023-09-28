@@ -26,6 +26,8 @@ SECRET_KEY = 'django-insecure-#0+s6@5^k$xn^j5cs!z+1f3e1sgyl4xwrg07-^uwa*chb*1$fb
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTH_USER_MODEL = 'tasks.Users'
+
 
 
 # Application definition
@@ -40,7 +42,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'coreapi',
-    'tasks'
+    'tasks',
+    'rest_framework.authtoken'
 
 ]
 
@@ -53,6 +56,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -127,7 +144,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 CORS_ALLOWED_ORIGINS = []
 

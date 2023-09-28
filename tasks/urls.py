@@ -13,7 +13,7 @@ from tasks.views.catalogs import (
     )
 from tasks.views.home_info import HomeInfoViewSet
 from tasks.views.client import ClientViewSet
-from tasks.views.users import UserViewSet
+from tasks.views.users import UserViewSet , LoginView
 
 router = routers.DefaultRouter()
 
@@ -32,8 +32,9 @@ router.register('users', UserViewSet, basename='user')
 
 urlpatterns = [
     #URLs desde registro de router(catálogos):
-    path('', include(router.urls))
+    path('', include(router.urls)),
     
+    path('login/', LoginView.as_view(), name='login')
     #Paths as_view()
     # path("api/v1/", include(router.urls)),
     # path("docs/", include_docs_urls(title="Task API"))

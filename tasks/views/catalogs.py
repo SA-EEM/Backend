@@ -3,9 +3,7 @@ from rest_framework import viewsets
 from tasks.models.models import (Status, 
                                 Services, 
                                 WattmeterBrand, 
-                                Route, 
                                 Village, 
-                                ElectricPole,
                                 IdentificationType,
                                 Roles,
                                 Departments
@@ -14,9 +12,7 @@ from tasks.models.models import (Status,
 from tasks.serializers.catalogs import (StatusSerializer,
                                         ServiceSerializer,
                                         WattmeterBrandSerializer,
-                                        RouteSerializer,
                                         VillageSerializer,
-                                        ElectricPoleSerializer,
                                         IdentificationTypeSerializer,
                                         RolesSerializer,
                                         DepartmentsSerializer
@@ -36,26 +32,20 @@ class WattmeterBrandViewSet(viewsets.ModelViewSet):
     queryset = WattmeterBrand.objects.all()
     serializer_class = WattmeterBrandSerializer
 
-class RouteViewSet(viewsets.ModelViewSet):
-    queryset = Route.objects.all()
-    serializer_class = RouteSerializer
 
 class VillageViewSet(viewsets.ModelViewSet):
     queryset = Village.objects.all()
     serializer_class = VillageSerializer
-  
-class ElectricPoleViewSet(viewsets.ModelViewSet):
-    queryset = ElectricPole.objects.all()
-    serializer_class = ElectricPoleSerializer
+
 
 class IdentificationTypeViewSet(viewsets.ModelViewSet):
     queryset = IdentificationType.objects.all()
     serializer_class = IdentificationTypeSerializer
- 
+
 class RolesViewSet(viewsets.ModelViewSet):
     queryset = Roles.objects.all()
     serializer_class = RolesSerializer
- 
+
 class DepartmentsViewSet(viewsets.ModelViewSet):
     queryset = Departments.objects.all()
     serializer_class = DepartmentsSerializer

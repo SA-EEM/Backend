@@ -21,18 +21,13 @@ class AccountData(models.Model):
     cumulative_reading = models.IntegerField(blank=True, null=True)
     id_status = models.ForeignKey('Status', models.DO_NOTHING, db_column='id_status')
     id_read_user = models.ForeignKey('Users', models.DO_NOTHING, db_column='id_read_user')
-    next_visit_date = models.DateField(blank=True, null=True)
     watts_hired = models.FloatField(blank=True, null=True)
-    id_electric_pole = models.OneToOneField('ElectricPole', models.DO_NOTHING, db_column='id_electric_pole')
     exent_iva = models.IntegerField(blank=True, null=True)
-    exent_percentaje = models.FloatField(blank=True, null=True)
     electric_transformer = models.CharField(max_length=30, blank=True, null=True)
     phase = models.PositiveIntegerField(blank=True, null=True)
-    id_route = models.ForeignKey('Route', models.DO_NOTHING, db_column='id_route')
     visit_date = models.DateField(blank=True, null=True)
     ap_amount = models.FloatField(blank=True, null=True)
     installation_invoice = models.CharField(max_length=25, blank=True, null=True)
-    pay_date = models.DateField(blank=True, null=True)
     contract_number = models.CharField(max_length=15, blank=True, null=True)
     pay_docs = models.CharField(max_length=75, blank=True, null=True)
     central_number = models.CharField(max_length=15, blank=True, null=True)
@@ -77,16 +72,6 @@ class Departments(models.Model):
         db_table = 'departments'
 
 
-class ElectricPole(models.Model):
-    id = models.CharField(primary_key=True, max_length=10)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'electric_pole'
-
-
 class HomeInformation(models.Model):
     municipality_name = models.CharField(max_length=25, blank=True, null=True)
     addres = models.CharField(max_length=50)
@@ -111,18 +96,6 @@ class IdentificationType(models.Model):
         db_table = 'identification_type'
 
 
-class Login(models.Model):
-    username = models.CharField(unique=True, max_length=25)
-    password = models.CharField(max_length=25)
-    id_user = models.ForeignKey('Users', models.DO_NOTHING, db_column='id_user')
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'login'
-
-
 class Roles(models.Model):
     rol_name = models.CharField(max_length=25, blank=True, null=True)
     insert_date = models.DateTimeField(auto_now=True)
@@ -131,16 +104,6 @@ class Roles(models.Model):
     class Meta:
         managed = False
         db_table = 'roles'
-
-
-class Route(models.Model):
-    route_name = models.CharField(unique=True, max_length=50)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'route'
 
 
 class Services(models.Model):
@@ -162,10 +125,11 @@ class Status(models.Model):
         managed = False
         db_table = 'status'
 
-
 class Users(models.Model):
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
+    username = models.CharField(unique=True, max_length=25)
+    password = models.CharField(max_length=25)
     insert_date = models.DateTimeField(auto_now=True)
     update_date = models.DateTimeField(blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)

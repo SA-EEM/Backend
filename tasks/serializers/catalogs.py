@@ -5,9 +5,7 @@ from rest_framework import serializers
 from tasks.models.models import (Status, 
                                 Services, 
                                 WattmeterBrand, 
-                                Route, 
                                 Village, 
-                                ElectricPole,
                                 IdentificationType,
                                 Roles,
                                 Departments
@@ -70,26 +68,6 @@ class WattmeterBrandSerializer(serializers.ModelSerializer):
         return instance
     
 
-class RouteSerializer(serializers.ModelSerializer):
-    class Meta:    
-        model = Route
-        fields = ['id', 'route_name', 'insert_date', 'update_date']
-        read_only_fields = ['insert_date']
-    
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation['insert_date'] = instance.insert_date.strftime('%Y-%m-%d')
-        representation['update_date'] = instance.update_date.strftime('%Y-%m-%d') if instance.update_date is not None else instance.update_date
-        return representation
-    
-    def update(self, instance, validated_data):
-        instance.update_date = timezone.now()
-        instance.route_name = validated_data.get('route_name')
-        instance.save(update_fields=['route_name', 'update_date'])
-        return instance
-
-    
-
 class VillageSerializer(serializers.ModelSerializer):
     class Meta:    
         model = Village
@@ -106,23 +84,6 @@ class VillageSerializer(serializers.ModelSerializer):
         instance.update_date = timezone.now()
         instance.village_name = validated_data.get('village_name')
         instance.save(update_fields=['village_name', 'update_date'])
-        return instance
-
-class ElectricPoleSerializer(serializers.ModelSerializer):
-    class Meta:    
-        model = ElectricPole
-        fields = ['id', 'insert_date', 'update_date']
-        read_only_fields = ['insert_date']
-    
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        representation['insert_date'] = instance.insert_date.strftime('%Y-%m-%d')
-        representation['update_date'] = instance.update_date.strftime('%Y-%m-%d') if instance.update_date is not None else instance.update_date
-        return representation
-    
-    def update(self, instance, validated_data):
-        instance.update_date = timezone.now()
-        instance.save()
         return instance
 
 class IdentificationTypeSerializer(serializers.ModelSerializer):

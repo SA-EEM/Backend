@@ -12,7 +12,7 @@ class GETUsersSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Users
-        fields = ['id', 'first_name', 'last_name', 'status', 'rol', 'department','insert_date', 'update_date']
+        fields = ['id', 'first_name', 'last_name', 'username', 'status', 'rol', 'department','insert_date', 'update_date']
         read_only_fields = ['insert_date']
         extra_kwargs = {
             'password' : {'write_only': True}
@@ -30,7 +30,7 @@ class GETUsersSerializer(serializers.ModelSerializer):
 class POSTUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ['id', 'first_name', 'last_name', 'status', 'rol', 'department','insert_date', 'update_date']
+        fields = ['id', 'first_name', 'last_name', 'username', 'password', 'status', 'rol', 'department','insert_date', 'update_date']
         read_only_fields = ['insert_date']
 
         extra_kwargs = {

@@ -3,10 +3,117 @@
 #   * Rearrange models' order
 #   * Make sure each model has one field with primary_key=True
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+#   * Remov` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
+class Departments(models.Model):
+    department_name = models.CharField(max_length=25, blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'departments'
+
+class IdentificationType(models.Model):
+    identification_name = models.CharField(max_length=25)
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'identification_type'
+
+class Roles(models.Model):
+    rol_name = models.CharField(max_length=25, blank=True, null=True)
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'roles'
+
+class Services(models.Model):
+    service_name = models.CharField(unique=True, max_length=50)
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'services'
+
+class Status(models.Model):
+    status_name = models.CharField(unique=True, max_length=25)
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'status'
+
+class Village(models.Model):
+    village_name = models.CharField(unique=True, max_length=50)
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'village'
+
+class WattmeterBrand(models.Model):
+    brand_name = models.CharField(max_length=50)
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'wattmeter_brand'
+
+class Wattmeter(models.Model):
+    wattmeter_number = models.IntegerField(unique=True)
+    wattmeter_brand = models.ForeignKey('WattmeterBrand', models.DO_NOTHING)
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'wattmeter'
+
+class HomeInformation(models.Model):
+    municipality_name = models.CharField(max_length=25, blank=True, null=True)
+    addres = models.CharField(max_length=50)
+    zone_number = models.PositiveIntegerField()
+    reference = models.CharField(max_length=50, blank=True, null=True)
+    id_village = models.ForeignKey('Village', models.DO_NOTHING, db_column='id_village')
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'home_information'
+
+class Users(AbstractUser):
+    first_name = models.CharField(max_length=25)
+    last_name = models.CharField(max_length=25)
+    username = models.CharField(unique=True, max_length=25)
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+    status = models.IntegerField(blank=True, null=True)
+    rol = models.ForeignKey(Roles, models.DO_NOTHING)
+    department = models.ForeignKey(Departments, models.DO_NOTHING)
+
+    class Meta:
+        db_table = 'users'
+
+class Client(models.Model):
+    first_name = models.CharField(max_length=35)
+    middle_name = models.CharField(max_length=35, blank=True, null=True)
+    third_name = models.CharField(max_length=35, blank=True, null=True)
+    first_lastname = models.CharField(max_length=35)
+    second_lastname = models.CharField(max_length=35)
+    married_name = models.CharField(max_length=35, blank=True, null=True)
+    nit = models.PositiveIntegerField(unique=True)
+    email = models.CharField(unique=True, max_length=50, blank=True, null=True)
+    phone_number = models.PositiveIntegerField()
+    identification = models.ForeignKey('IdentificationType', models.DO_NOTHING)
+    insert_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        db_table = 'client'
 
 class AccountData(models.Model):
     wattmeter = models.ForeignKey('Wattmeter', models.DO_NOTHING)
@@ -39,134 +146,4 @@ class AccountData(models.Model):
     update_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'account_data'
-
-
-class Client(models.Model):
-    first_name = models.CharField(max_length=35)
-    middle_name = models.CharField(max_length=35, blank=True, null=True)
-    third_name = models.CharField(max_length=35, blank=True, null=True)
-    first_lastname = models.CharField(max_length=35)
-    second_lastname = models.CharField(max_length=35)
-    married_name = models.CharField(max_length=35, blank=True, null=True)
-    nit = models.PositiveIntegerField(unique=True)
-    email = models.CharField(unique=True, max_length=50, blank=True, null=True)
-    phone_number = models.PositiveIntegerField()
-    identification = models.ForeignKey('IdentificationType', models.DO_NOTHING)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'client'
-
-
-class Departments(models.Model):
-    department_name = models.CharField(max_length=25, blank=True, null=True)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'departments'
-
-
-class HomeInformation(models.Model):
-    municipality_name = models.CharField(max_length=25, blank=True, null=True)
-    addres = models.CharField(max_length=50)
-    zone_number = models.PositiveIntegerField()
-    reference = models.CharField(max_length=50, blank=True, null=True)
-    id_village = models.ForeignKey('Village', models.DO_NOTHING, db_column='id_village')
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'home_information'
-
-
-class IdentificationType(models.Model):
-    identification_name = models.CharField(max_length=25)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'identification_type'
-
-
-class Roles(models.Model):
-    rol_name = models.CharField(max_length=25, blank=True, null=True)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'roles'
-
-
-class Services(models.Model):
-    service_name = models.CharField(unique=True, max_length=50)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'services'
-
-
-class Status(models.Model):
-    status_name = models.CharField(unique=True, max_length=25)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'status'
-
-class Users(models.Model):
-    first_name = models.CharField(max_length=25)
-    last_name = models.CharField(max_length=25)
-    username = models.CharField(unique=True, max_length=25)
-    password = models.CharField(max_length=25)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-    status = models.IntegerField(blank=True, null=True)
-    rol = models.ForeignKey(Roles, models.DO_NOTHING)
-    department = models.ForeignKey(Departments, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'users'
-
-
-class Village(models.Model):
-    village_name = models.CharField(unique=True, max_length=50)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'village'
-
-
-class Wattmeter(models.Model):
-    wattmeter_number = models.IntegerField(unique=True)
-    wattmeter_brand = models.ForeignKey('WattmeterBrand', models.DO_NOTHING)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'wattmeter'
-
-
-class WattmeterBrand(models.Model):
-    brand_name = models.CharField(max_length=50)
-    insert_date = models.DateTimeField(auto_now=True)
-    update_date = models.DateTimeField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'wattmeter_brand'

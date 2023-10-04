@@ -116,8 +116,8 @@ class Client(models.Model):
         db_table = 'client'
 
 class AccountData(models.Model):
-    wattmeter = models.ForeignKey('Wattmeter', models.DO_NOTHING)
-    request_date = models.DateTimeField()
+    id_wattmeter = models.ForeignKey('Wattmeter', models.DO_NOTHING, db_column='id_wattmeter')
+    request_date = models.DateTimeField(auto_now=True)
     opening_date = models.DateTimeField(blank=True, null=True)
     id_home_information = models.ForeignKey('HomeInformation', models.DO_NOTHING, db_column='id_home_information')
     reading_order = models.IntegerField(blank=True, null=True)

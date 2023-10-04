@@ -15,6 +15,7 @@ from tasks.views.home_info import HomeInfoViewSet
 from tasks.views.client import ClientViewSet
 from tasks.views.users import UserViewSet , LoginView
 from tasks.views.wattmeter import WattmeterViewSet
+from tasks.views.account_data import AccountDataViewSet
 
 router = routers.DefaultRouter()
 
@@ -29,6 +30,7 @@ router.register('homeInformation', HomeInfoViewSet, basename='homeInformation')
 router.register('client', ClientViewSet, basename='client')
 router.register('users', UserViewSet, basename='user')
 router.register('wattmeter', WattmeterViewSet, basename='wattmeter')
+router.register('accountData', AccountDataViewSet, basename='accountData')
 
 # router.register(r'tasks', views.TaskView, 'tasks')
 

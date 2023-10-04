@@ -24,5 +24,5 @@ class POSTWattmeterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Wattmeter
-        fields = ['wattmeter_number', 'wattmeter_brand', 'insert_date', 'update_date']
+        fields = ['id', 'wattmeter_number', 'wattmeter_brand', 'insert_date', 'update_date']
         read_only_fields = ['insert_date']

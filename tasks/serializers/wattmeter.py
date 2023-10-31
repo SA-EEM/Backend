@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 #Modelo
 from tasks.models.models import Wattmeter
@@ -26,3 +27,10 @@ class POSTWattmeterSerializer(serializers.ModelSerializer):
         model = Wattmeter
         fields = ['id', 'wattmeter_number', 'wattmeter_brand', 'insert_date', 'update_date']
         read_only_fields = ['insert_date']
+    
+    def update(self, instance, validated_data):
+        instance.update_date = timezone.now()
+        instance.wattmeter_number = validated_data.get('wattmeter_number')
+        instance.wattmeter_brand = validated_data.get('wattmeter_brand')
+        instance.save(update_fields=['wattmeter_number', 'wattmeter_brand', 'update_date'])
+        return instance

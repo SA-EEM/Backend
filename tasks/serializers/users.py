@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 #Modelo
 from tasks.models.models import Users
@@ -50,3 +51,20 @@ class POSTUsersSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user = user)
         return user
+    
+    def update(self, instance, validated_data):
+        update_fields = []
+        for field in ['first_name', 'last_name', 'username', 'status', 'rol', 'department', 'update_date']:
+            if field in validated_data:
+                setattr(instance, field, validated_data[field])
+                update_fields.append(field)
+        
+        if 'password' in validated_data:
+            instance.set_password(validated_data['password'])
+            update_fields.append('password')
+        
+        if update_fields:
+            instance.update_date = timezone.now()
+            instance.save(update_fields=update_fields)
+        
+        return instance

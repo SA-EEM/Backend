@@ -127,7 +127,7 @@ class AccountData(models.Model):
     volts_requested = models.IntegerField(blank=True, null=True)
     cumulative_reading = models.IntegerField(blank=True, null=True)
     id_status = models.ForeignKey('Status', models.DO_NOTHING, db_column='id_status')
-    id_read_user = models.ForeignKey('Users', models.DO_NOTHING, db_column='id_read_user')
+    id_read_user = models.ForeignKey('Users', models.DO_NOTHING, db_column='id_read_user', blank=True, null=True)
     watts_hired = models.FloatField(blank=True, null=True)
     exent_iva = models.IntegerField(blank=True, null=True)
     electric_transformer = models.CharField(max_length=30, blank=True, null=True)

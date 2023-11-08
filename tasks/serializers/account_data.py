@@ -67,7 +67,6 @@ class GETAccountDataSerializer(serializers.ModelSerializer):
 class POSTAccountDataSerializer(serializers.ModelSerializer):
     id_wattmeter = POSTWattmeterSerializer(many=False)
     id_home_information = POSTHomeInformationSerializer(many=False)
-    id_client = POSTClientSerializer(many=False)
     
     class Meta:
         model = AccountData
@@ -105,17 +104,14 @@ class POSTAccountDataSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         wattmeter_data = validated_data.pop('id_wattmeter')
         home_info_data = validated_data.pop('id_home_information')
-        client_data = validated_data.pop('id_client')
         
         # Crea los objetos relacionados y asigna sus valores
         wattmeter_instance = Wattmeter.objects.create(**wattmeter_data)
         home_info_instance = HomeInformation.objects.create(**home_info_data)
-        client_instance = Client.objects.create(**client_data)
         
         # Asigna los objetos relacionados a la instancia de AccountData
         validated_data['id_wattmeter'] = wattmeter_instance
         validated_data['id_home_information'] = home_info_instance
-        validated_data['id_client'] = client_instance
         
         account = AccountData.objects.create(**validated_data)
         

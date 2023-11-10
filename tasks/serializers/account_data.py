@@ -61,11 +61,11 @@ class GETAccountDataSerializer(serializers.ModelSerializer):
         data['id_user'] = GETUsersSerializer(instance.id_user).data
         data['insert_date'] = instance.insert_date.strftime('%Y-%m-%d')
         data['update_date'] = instance.update_date.strftime('%Y-%m-%d') if instance.update_date is not None else instance.update_date
+        data['opening_date'] = instance.opening_date.strftime('%Y-%m-%d') if instance.opening_date is not None else instance.opening_date
         return data
     
 
 class POSTAccountDataSerializer(serializers.ModelSerializer):
-    id_wattmeter = POSTWattmeterSerializer(many=False)
     id_home_information = POSTHomeInformationSerializer(many=False)
     
     class Meta:
@@ -102,15 +102,12 @@ class POSTAccountDataSerializer(serializers.ModelSerializer):
         read_only_fields = ['insert_date']
     
     def create(self, validated_data):
-        wattmeter_data = validated_data.pop('id_wattmeter')
         home_info_data = validated_data.pop('id_home_information')
         
         # Crea los objetos relacionados y asigna sus valores
-        wattmeter_instance = Wattmeter.objects.create(**wattmeter_data)
         home_info_instance = HomeInformation.objects.create(**home_info_data)
         
         # Asigna los objetos relacionados a la instancia de AccountData
-        validated_data['id_wattmeter'] = wattmeter_instance
         validated_data['id_home_information'] = home_info_instance
         
         account = AccountData.objects.create(**validated_data)

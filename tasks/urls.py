@@ -16,6 +16,7 @@ from tasks.views.client import ClientViewSet
 from tasks.views.users import UserViewSet , LoginView
 from tasks.views.wattmeter import WattmeterViewSet
 from tasks.views.account_data import AccountDataViewSet
+from rest_framework_simplejwt import views as jwt_views
 
 router = routers.DefaultRouter()
 
@@ -38,8 +39,10 @@ urlpatterns = [
     #URLs desde registro de router(catálogos):
     path('', include(router.urls)),
     
-    path('login/', LoginView.as_view(), name='login')
+    path('login/', LoginView.as_view(), name='login'),
     #Paths as_view()
     # path("api/v1/", include(router.urls)),
     # path("docs/", include_docs_urls(title="Task API"))
+    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
